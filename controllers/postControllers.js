@@ -41,7 +41,6 @@ exports.regUser = async (req, res, next) => {
         return res.json({
             success: val
         })
-        res.status(200).json({ message: "sent" });
     } catch (error) {
         console.log(error);
         next(error);
@@ -50,22 +49,22 @@ exports.regUser = async (req, res, next) => {
 exports.login = async (req, res, next) => {
     try {
         let obj = req.body;
-        let result = await Post.login(obj.username, obj.password);
+        let result = await Post.login(obj.email, obj.password);
         console.log("token: " + result)
         if (result == null) {
             sucvar = 0;
-            msg = "WRONG USERNAME PASSWORD"
+            msg = "Invalid credentials!"
         }
         else {
             sucvar = 1;
-            msg = "Login successful"
+            msg = "Login successful!"
         }
         return res.json({
             success: sucvar,
             message: msg,
             token: result
         })
-        res.status(200).json({ message: "sent" });
+        // res.status(200).json({ message: "sent" });
     } catch (error) {
         console.log(error);
         next(error);

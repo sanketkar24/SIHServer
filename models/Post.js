@@ -43,8 +43,8 @@ class Post {
             throw error;
         })
     };
-    static async login(username, password){
-        let sql = `SELECT COUNT(username) as count FROM UserProfile WHERE username = '${username}';`;
+    static async login(email, password){
+        let sql = `SELECT COUNT(email) as count FROM UserProfile WHERE email = '${email}';`;
         return db.query(sql).then(([row])=>{
             console.log(row[0].count)
             if(row[0].count == 0){
@@ -53,12 +53,12 @@ class Post {
             }
             else{
                 // LOGIN
-                let ins = `SELECT * FROM UserProfile WHERE username = '${username}';`;
+                let ins = `SELECT * FROM UserProfile WHERE email = '${email}';`;
                 return db.query(ins).then(async ([row])=>{
                     try {
                         if(await bcrypt.compare(password,row[0].password)){
                             console.log(row[0])
-                            var jsonToken = jwt.sign({result: {username: row[0].username, password: password}}, process.env.ACCESS_KEY)
+                            var jsonToken = jwt.sign({result: {email: row[0].username, password: password}}, process.env.ACCESS_KEY)
                             return jsonToken
                         }
                     } catch (error) {
