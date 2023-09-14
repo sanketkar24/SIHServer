@@ -6,6 +6,8 @@ const router = express.Router();
 const { checkToken } = require("../auth/token_validation");
 router.route("/register").post(postController.regUser);
 router.route("/login").post(postController.login);
+router.post("/submit",checkToken,postController.submit);
+router.get("/getUser",checkToken,postController.getUser);
 // router.route("/user").get(postController.getUser);
 // router.post("/reset",checkToken,postController.reset);
 // router.route("/list").post(postController.findPeopleByID)
